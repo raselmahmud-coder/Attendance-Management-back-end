@@ -2,7 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
-const { userPost, userGet, getStudents, updateStudent } = require("./Routes/userRoute");
+const { userPost, userGet, getStudents, updateStudent, getTeacher } = require("./Routes/userRoute");
 const app = express();
 const port = process.env.PORT || 5000;
 
@@ -29,5 +29,6 @@ async function main() {
 }
 app.post("/user", userPost);
 app.get("/students", getStudents);
+app.get("/teachers", getTeacher);
 app.put("/student", updateStudent);
 app.get("/user-login", userGet);

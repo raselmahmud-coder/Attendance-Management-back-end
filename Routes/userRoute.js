@@ -24,17 +24,23 @@ const getStudents = async (req, res) => {
     res.status(500).send({ error: "sorry! can't perform this action" });
   }
 };
+const getTeacher = async (req, res) => {
+  try {
+    const result = await Users.find({ role: "teacher" });
+    res.status(200).send(result);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send({ error: "sorry! can't perform this action" });
+  }
+};
 const updateStudent = async (req, res) => {
   try {
-    const { id, toggle } = req.body;
-    console.log(id, toggle);
-
+    const { id, isPresent } = req.body;
     const result = await Users.findOneAndUpdate(
       { _id: id },
-      { $set: { present: toggle ? true : false } },
+      { $set: { present: isPresent === "true" ? true : false } },
       { upsert: true, new: true },
     );
-    console.log(result.present);
     res.status(200).send(result);
   } catch (err) {
     console.log(err);
@@ -57,4 +63,4 @@ const userGet = async (req, res) => {
   }
 };
 
-module.exports = { userPost, userGet, getStudents, updateStudent };
+module.exports = { userPost, userGet, getStudents, updateStudent, getTeacher };
